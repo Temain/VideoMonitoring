@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoMonitoring.Web", "VideoMonitoring.Web\VideoMonitoring.Web.csproj", "{65074AAB-8FDF-4192-94EC-5E57AADD65C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoMonitoring.Domain", "VideoMonitoring.Domain\VideoMonitoring.Domain.csproj", "{CE4D62A6-39D3-4278-A4B4-58E822152847}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65074AAB-8FDF-4192-94EC-5E57AADD65C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65074AAB-8FDF-4192-94EC-5E57AADD65C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65074AAB-8FDF-4192-94EC-5E57AADD65C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65074AAB-8FDF-4192-94EC-5E57AADD65C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE4D62A6-39D3-4278-A4B4-58E822152847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4D62A6-39D3-4278-A4B4-58E822152847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE4D62A6-39D3-4278-A4B4-58E822152847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE4D62A6-39D3-4278-A4B4-58E822152847}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {472B4506-7F16-4C15-94C1-BD34C6BA3093}
+	EndGlobalSection
+EndGlobal
