@@ -25,7 +25,8 @@ namespace VideoMonitoring.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DbConnection")));
+                options.UseMySql(Configuration.GetConnectionString("DbConnection")
+					, x => x.MigrationsHistoryTable("_migrations")));
 
             services.AddIdentity<User, IdentityRole<long>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -12,7 +12,7 @@ using VideoMonitoring.Domain.Data;
 namespace VideoMonitoring.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180208140137_Init")]
+    [Migration("20180208140946_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
