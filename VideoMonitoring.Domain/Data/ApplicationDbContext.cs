@@ -7,7 +7,13 @@ namespace VideoMonitoring.Domain.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+		public DbSet<ProductCategory> ProductCategories { get; set; }
+		public DbSet<ProductType> ProductTypes { get; set; }
+		public DbSet<Product> Products { get; set; }
+		public DbSet<Order> Orders { get; set; }
+		public DbSet<OrderDetail> OrderDetails { get; set; }
+
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
