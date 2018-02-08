@@ -5,31 +5,35 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 using VideoMonitoring.Domain.Data;
 
-namespace VideoMonitoring.Web.Data.Migrations
+namespace VideoMonitoring.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180208074253_AddMainTables")]
-    partial class AddMainTables
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("concurrency_stamp");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnName("discriminator");
 
                     b.Property<string>("Name")
                         .HasColumnName("name")
@@ -40,16 +44,14 @@ namespace VideoMonitoring.Web.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id")
-                        .HasName("pk_asp_net_roles");
+                        .HasName("pk_asp_role");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("role_name_index");
+                    b.ToTable("asp_role");
 
-                    b.ToTable("asp_net_roles");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole<long>");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,20 +63,19 @@ namespace VideoMonitoring.Web.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnName("claim_value");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
+                    b.Property<long>("RoleId")
                         .HasColumnName("role_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_asp_net_role_claims");
+                        .HasName("pk_asp_role_claim");
 
                     b.HasIndex("RoleId")
-                        .HasName("ix_asp_net_role_claims_role_id");
+                        .HasName("ix_asp_role_claim_role_id");
 
-                    b.ToTable("asp_net_role_claims");
+                    b.ToTable("asp_role_claim");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,20 +87,19 @@ namespace VideoMonitoring.Web.Data.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnName("claim_value");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<long>("UserId")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_asp_net_user_claims");
+                        .HasName("pk_asp_user_claim");
 
                     b.HasIndex("UserId")
-                        .HasName("ix_asp_net_user_claims_user_id");
+                        .HasName("ix_asp_user_claim_user_id");
 
-                    b.ToTable("asp_net_user_claims");
+                    b.ToTable("asp_user_claim");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnName("login_provider");
@@ -110,39 +110,38 @@ namespace VideoMonitoring.Web.Data.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnName("provider_display_name");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<long>("UserId")
                         .HasColumnName("user_id");
 
                     b.HasKey("LoginProvider", "ProviderKey")
-                        .HasName("pk_asp_net_user_logins");
+                        .HasName("pk_asp_user_login");
 
                     b.HasIndex("UserId")
-                        .HasName("ix_asp_net_user_logins_user_id");
+                        .HasName("ix_asp_user_login_user_id");
 
-                    b.ToTable("asp_net_user_logins");
+                    b.ToTable("asp_user_login");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnName("user_id");
 
-                    b.Property<string>("RoleId")
+                    b.Property<long>("RoleId")
                         .HasColumnName("role_id");
 
                     b.HasKey("UserId", "RoleId")
-                        .HasName("pk_asp_net_user_roles");
+                        .HasName("pk_asp_user_role");
 
                     b.HasIndex("RoleId")
-                        .HasName("ix_asp_net_user_roles_role_id");
+                        .HasName("ix_asp_user_role_role_id");
 
-                    b.ToTable("asp_net_user_roles");
+                    b.ToTable("asp_user_role");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnName("user_id");
 
                     b.Property<string>("LoginProvider")
@@ -155,14 +154,188 @@ namespace VideoMonitoring.Web.Data.Migrations
                         .HasColumnName("value");
 
                     b.HasKey("UserId", "LoginProvider", "Name")
-                        .HasName("pk_asp_net_user_tokens");
+                        .HasName("pk_asp_user_token");
 
-                    b.ToTable("asp_net_user_tokens");
+                    b.ToTable("asp_user_token");
                 });
 
-            modelBuilder.Entity("VideoMonitoring.Domain.Models.ApplicationUser", b =>
+            modelBuilder.Entity("VideoMonitoring.Domain.Models.Order", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("order_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<bool>("IsChecked")
+                        .HasColumnName("is_checked");
+
+                    b.Property<bool>("IsDelivered")
+                        .HasColumnName("is_delivered");
+
+                    b.Property<bool>("IsSended")
+                        .HasColumnName("is_sended");
+
+                    b.Property<decimal>("TotalSum")
+                        .HasColumnName("total_sum");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UserId")
+                        .HasColumnName("user_id");
+
+                    b.Property<long?>("UserId1")
+                        .HasColumnName("user_id1");
+
+                    b.HasKey("OrderId")
+                        .HasName("pk_tl_order");
+
+                    b.HasIndex("UserId1")
+                        .HasName("ix_tl_order_user_id1");
+
+                    b.ToTable("tl_order");
+                });
+
+            modelBuilder.Entity("VideoMonitoring.Domain.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("order_detail_id");
+
+                    b.Property<decimal?>("Count")
+                        .HasColumnName("count");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnName("order_id");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnName("price");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnName("product_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("OrderDetailId")
+                        .HasName("pk_tl_order_detail");
+
+                    b.HasIndex("OrderId")
+                        .HasName("ix_tl_order_detail_order_id");
+
+                    b.HasIndex("ProductId")
+                        .HasName("ix_tl_order_detail_product_id");
+
+                    b.ToTable("tl_order_detail");
+                });
+
+            modelBuilder.Entity("VideoMonitoring.Domain.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("product_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<string>("Description")
+                        .HasColumnName("description");
+
+                    b.Property<decimal?>("InStock")
+                        .HasColumnName("in_stock");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnName("price");
+
+                    b.Property<int>("ProductName")
+                        .HasColumnName("product_name");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnName("product_type_id");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("ProductId")
+                        .HasName("pk_tl_product");
+
+                    b.HasIndex("ProductTypeId")
+                        .HasName("ix_tl_product_product_type_id");
+
+                    b.ToTable("tl_product");
+                });
+
+            modelBuilder.Entity("VideoMonitoring.Domain.Models.ProductCategory", b =>
+                {
+                    b.Property<int>("ProductCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("product_category_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<string>("ProductCategoryName")
+                        .HasColumnName("product_category_name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("ProductCategoryId")
+                        .HasName("pk_td_product_category");
+
+                    b.ToTable("td_product_category");
+                });
+
+            modelBuilder.Entity("VideoMonitoring.Domain.Models.ProductType", b =>
+                {
+                    b.Property<int>("ProductTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("product_type_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnName("product_category_id");
+
+                    b.Property<string>("ProductTypeName")
+                        .HasColumnName("product_type_name");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("ProductTypeId")
+                        .HasName("pk_td_product_type");
+
+                    b.HasIndex("ProductCategoryId")
+                        .HasName("ix_td_product_type_product_category_id");
+
+                    b.ToTable("td_product_type");
+                });
+
+            modelBuilder.Entity("VideoMonitoring.Domain.Models.User", b =>
+                {
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
@@ -214,7 +387,7 @@ namespace VideoMonitoring.Web.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id")
-                        .HasName("pk_asp_net_users");
+                        .HasName("pk_asp_user");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("email_index");
@@ -223,237 +396,80 @@ namespace VideoMonitoring.Web.Data.Migrations
                         .IsUnique()
                         .HasName("user_name_index");
 
-                    b.ToTable("asp_net_users");
+                    b.ToTable("asp_user");
                 });
 
-            modelBuilder.Entity("VideoMonitoring.Domain.Models.Order", b =>
+            modelBuilder.Entity("VideoMonitoring.Domain.Models.Role", b =>
                 {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("order_id");
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole<long>");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnName("application_user_id");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnName("created_at");
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("role_name_index");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnName("deleted_at");
+                    b.ToTable("asp_role");
 
-                    b.Property<bool>("IsChecked")
-                        .HasColumnName("is_checked");
-
-                    b.Property<bool>("IsDelivered")
-                        .HasColumnName("is_delivered");
-
-                    b.Property<bool>("IsSended")
-                        .HasColumnName("is_sended");
-
-                    b.Property<decimal>("TotalSum")
-                        .HasColumnName("total_sum");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("OrderId")
-                        .HasName("pk_orders");
-
-                    b.HasIndex("ApplicationUserId")
-                        .HasName("ix_orders_application_user_id");
-
-                    b.ToTable("orders");
+                    b.HasDiscriminator().HasValue("Role");
                 });
 
-            modelBuilder.Entity("VideoMonitoring.Domain.Models.OrderDetail", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
-                    b.Property<int>("OrderDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("order_detail_id");
-
-                    b.Property<decimal?>("Count")
-                        .HasColumnName("count");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnName("order_id");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnName("price");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnName("product_id");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("OrderDetailId")
-                        .HasName("pk_order_details");
-
-                    b.HasIndex("OrderId")
-                        .HasName("ix_order_details_order_id");
-
-                    b.HasIndex("ProductId")
-                        .HasName("ix_order_details_product_id");
-
-                    b.ToTable("order_details");
-                });
-
-            modelBuilder.Entity("VideoMonitoring.Domain.Models.Product", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("product_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<string>("Description")
-                        .HasColumnName("description");
-
-                    b.Property<decimal?>("InStock")
-                        .HasColumnName("in_stock");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnName("price");
-
-                    b.Property<int>("ProductName")
-                        .HasColumnName("product_name");
-
-                    b.Property<int>("ProductTypeId")
-                        .HasColumnName("product_type_id");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("ProductId")
-                        .HasName("pk_products");
-
-                    b.HasIndex("ProductTypeId")
-                        .HasName("ix_products_product_type_id");
-
-                    b.ToTable("products");
-                });
-
-            modelBuilder.Entity("VideoMonitoring.Domain.Models.ProductCategory", b =>
-                {
-                    b.Property<int>("ProductCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("product_category_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<string>("ProductCategoryName")
-                        .HasColumnName("product_category_name");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("ProductCategoryId")
-                        .HasName("pk_product_categories");
-
-                    b.ToTable("product_categories");
-                });
-
-            modelBuilder.Entity("VideoMonitoring.Domain.Models.ProductType", b =>
-                {
-                    b.Property<int>("ProductTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("product_type_id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnName("deleted_at");
-
-                    b.Property<int>("ProductCategoryId")
-                        .HasColumnName("product_category_id");
-
-                    b.Property<string>("ProductTypeName")
-                        .HasColumnName("product_type_name");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("ProductTypeId")
-                        .HasName("pk_product_types");
-
-                    b.HasIndex("ProductCategoryId")
-                        .HasName("ix_product_types_product_category_id");
-
-                    b.ToTable("product_types");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("VideoMonitoring.Domain.Models.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("fk_asp_net_role_claims_asp_net_roles_role_id")
+                        .HasConstraintName("fk_asp_role_claim_asp_role_role_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("VideoMonitoring.Domain.Models.ApplicationUser")
+                    b.HasOne("VideoMonitoring.Domain.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_asp_net_user_claims_asp_net_users_user_id")
+                        .HasConstraintName("fk_asp_user_claim_asp_user_user_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("VideoMonitoring.Domain.Models.ApplicationUser")
+                    b.HasOne("VideoMonitoring.Domain.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_asp_net_user_logins_asp_net_users_user_id")
+                        .HasConstraintName("fk_asp_user_login_asp_user_user_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("VideoMonitoring.Domain.Models.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id")
+                        .HasConstraintName("fk_asp_user_role_asp_role_role_id")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("VideoMonitoring.Domain.Models.ApplicationUser")
+                    b.HasOne("VideoMonitoring.Domain.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_asp_net_user_roles_asp_net_users_user_id")
+                        .HasConstraintName("fk_asp_user_role_asp_user_user_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.HasOne("VideoMonitoring.Domain.Models.ApplicationUser")
+                    b.HasOne("VideoMonitoring.Domain.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id")
+                        .HasConstraintName("fk_asp_user_token_asp_user_user_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VideoMonitoring.Domain.Models.Order", b =>
                 {
-                    b.HasOne("VideoMonitoring.Domain.Models.ApplicationUser", "User")
+                    b.HasOne("VideoMonitoring.Domain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .HasConstraintName("fk_orders_asp_net_users_application_user_id");
+                        .HasForeignKey("UserId1")
+                        .HasConstraintName("fk_tl_order_asp_user_user_id1");
                 });
 
             modelBuilder.Entity("VideoMonitoring.Domain.Models.OrderDetail", b =>
@@ -461,13 +477,13 @@ namespace VideoMonitoring.Web.Data.Migrations
                     b.HasOne("VideoMonitoring.Domain.Models.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
-                        .HasConstraintName("fk_order_details_orders_order_id")
+                        .HasConstraintName("fk_tl_order_detail_tl_order_order_id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("VideoMonitoring.Domain.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("fk_order_details_products_product_id")
+                        .HasConstraintName("fk_tl_order_detail_tl_product_product_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -476,7 +492,7 @@ namespace VideoMonitoring.Web.Data.Migrations
                     b.HasOne("VideoMonitoring.Domain.Models.ProductType", "ProductType")
                         .WithMany("Products")
                         .HasForeignKey("ProductTypeId")
-                        .HasConstraintName("fk_products_product_types_product_type_id")
+                        .HasConstraintName("fk_tl_product_td_product_type_product_type_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -485,7 +501,7 @@ namespace VideoMonitoring.Web.Data.Migrations
                     b.HasOne("VideoMonitoring.Domain.Models.ProductCategory", "ProductCategory")
                         .WithMany("ProductTypes")
                         .HasForeignKey("ProductCategoryId")
-                        .HasConstraintName("fk_product_types_product_categories_product_category_id")
+                        .HasConstraintName("fk_td_product_type_td_product_category_product_category_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace VideoMonitoring.Domain.Models
 {
+	[Table("td_product_type")]
 	public class ProductType
 	{
 		public ProductType()

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace VideoMonitoring.Domain.Models
 {
-    public class Order
+	[Table("tl_order")]
+	public class Order
     {
 		public Order()
 		{
@@ -14,8 +16,8 @@ namespace VideoMonitoring.Domain.Models
 		public int OrderId { get; set; }
 		public decimal TotalSum { get; set; }
 
-		public string ApplicationUserId { get; set; }
-		public ApplicationUser User { get; set; }
+		public string UserId { get; set; }
+		public User User { get; set; }
 
 		public bool IsChecked { get; set; }
 		public bool IsSended { get; set; }

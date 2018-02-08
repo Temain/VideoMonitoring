@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace VideoMonitoring.Domain.Models
 {
-    public class ProductCategory
+	[Table("td_product_category")]
+	public class ProductCategory
     {
 		public ProductCategory()
 		{

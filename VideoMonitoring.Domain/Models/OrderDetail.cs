@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace VideoMonitoring.Domain.Models
 {
-    public class OrderDetail
+	[Table("tl_order_detail")]
+	public class OrderDetail
     {
 		public int OrderDetailId { get; set; }
 
