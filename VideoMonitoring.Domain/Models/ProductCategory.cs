@@ -14,6 +14,7 @@ namespace VideoMonitoring.Domain.Models
 		}
 
 		public int ProductCategoryId { get; set; }
+
 		public string ProductCategoryName { get; set; }
 
 		public List<ProductType> ProductTypes { get; set; }

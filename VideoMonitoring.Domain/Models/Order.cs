@@ -16,7 +16,7 @@ namespace VideoMonitoring.Domain.Models
 		public int OrderId { get; set; }
 		public decimal TotalSum { get; set; }
 
-		public string UserId { get; set; }
+		public long UserId { get; set; }
 		public User User { get; set; }
 
 		public bool IsChecked { get; set; }

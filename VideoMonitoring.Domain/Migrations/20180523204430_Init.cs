@@ -186,18 +186,17 @@ namespace VideoMonitoring.Domain.Migrations
                     is_sended = table.Column<bool>(nullable: false),
                     total_sum = table.Column<decimal>(nullable: false),
                     updated_at = table.Column<DateTime>(nullable: true),
-                    user_id = table.Column<string>(nullable: true),
-                    user_id1 = table.Column<long>(nullable: true)
+                    user_id = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_tl_order", x => x.order_id);
                     table.ForeignKey(
-                        name: "fk_tl_order_asp_user_user_id1",
-                        column: x => x.user_id1,
+                        name: "fk_tl_order_asp_user_user_id",
+                        column: x => x.user_id,
                         principalTable: "asp_user",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -323,9 +322,9 @@ namespace VideoMonitoring.Domain.Migrations
                 column: "product_category_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_tl_order_user_id1",
+                name: "ix_tl_order_user_id",
                 table: "tl_order",
-                column: "user_id1");
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_tl_order_detail_order_id",

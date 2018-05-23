@@ -19,7 +19,7 @@ namespace VideoMonitoring.Domain.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
+                .HasAnnotation("ProductVersion", "2.0.3-rtm-10026");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
@@ -186,17 +186,14 @@ namespace VideoMonitoring.Domain.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnName("updated_at");
 
-                    b.Property<string>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnName("user_id");
-
-                    b.Property<long?>("UserId1")
-                        .HasColumnName("user_id1");
 
                     b.HasKey("OrderId")
                         .HasName("pk_tl_order");
 
-                    b.HasIndex("UserId1")
-                        .HasName("ix_tl_order_user_id1");
+                    b.HasIndex("UserId")
+                        .HasName("ix_tl_order_user_id");
 
                     b.ToTable("tl_order");
                 });
@@ -468,8 +465,9 @@ namespace VideoMonitoring.Domain.Migrations
                 {
                     b.HasOne("VideoMonitoring.Domain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
-                        .HasConstraintName("fk_tl_order_asp_user_user_id1");
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_tl_order_asp_user_user_id")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("VideoMonitoring.Domain.Models.OrderDetail", b =>
